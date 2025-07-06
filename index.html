@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNA Entry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e3f2fd;
+            padding: 40px;
+        }
+
+        .container {
+            width: 500px;
+            margin: 60px auto;
+        }
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            font-size: 14px;
+            width: 260px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .btn-submit    { background-color: #28a745; color: white; border: none; }
+        .btn-download  { background-color: #007bff; color: white; border: none; }
+        .btn-logout    { background-color: #dc3545; color: white; border: none; }
+        .btn-create    { background-color: #6f42c1; color: white; border: none; font-size: 13px; padding: 8px; }
+
+        .box {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .message {
+            color: green;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .file-info {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* ✅ Mobile Responsive Design */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .top-right {
+                position: static;
+                width: 95%;
+                margin: 0 auto 20px auto;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            input, button {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .btn-submit,
+            .btn-download,
+            .btn-logout,
+            .btn-create {
+                font-size: 15px;
+                padding: 10px;
+            }
+
+            .box {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+                text-align: center;
+            }
+
+            .file-info, .message {
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🔼 Create Excel (TOP-RIGHT CORNER or top on mobile) -->
+    <div class="top-right">
+        <form method="POST" action="/create_excel">
+            <label><strong>📁 Create or Switch Excel</strong></label>
+            <input type="text" name="filename" placeholder="e.g. rice1.xlsx" required>
+            <button class="btn-create" type="submit">Create / Switch</button>
+        </form>
+        {% if session['excel_file'] %}
+            <p class="file-info">🗂️ File: <strong>{{ session['excel_file'] }}</strong></p>
+        {% endif %}
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 🌾 DNA Entry Form Centered -->
+    <div class="container">
+        <div class="box">
+            <h2>🌾 Enter DNA Features</h2>
+            <form action="/submit" method="POST">
+                <input type="text" name="Name" placeholder="Name" required>
+                <input type="text" name="feature2" placeholder="Feature 2" required>
+                <input type="text" name="feature3" placeholder="Feature 3" required>
+                <input type="text" name="feature4" placeholder="Feature 4" required>
+                <input type="text" name="feature5" placeholder="Feature 5" required>
+                <button class="btn-submit" type="submit">➕ Submit</button>
+            </form>
+        </div>
+
+        <div class="box">
+            <form action="/download">
+                <button class="btn-download" type="submit">📥 Download Current Excel</button>
+            </form>
+            <form action="/logout">
+                <button class="btn-logout" type="submit">🚪 Logout</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
